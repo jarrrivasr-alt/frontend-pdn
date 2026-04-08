@@ -751,13 +751,35 @@ let sidebarOpen   = true;
 // ── INIT ──
 function init() {
   loadLogo();
+
+  // Leer parámetros del portal
+  const params   = new URLSearchParams(window.location.search);
+  const nombre   = params.get('nombre');
+  const area     = params.get('area');
+  const agentesParam = params.get('agentes');
+
+  // Filtrar agentes según área si vienen parámetros
+  if (agentesParam) {
+    const permitidos = agentesParam.split(',').map(s => s.trim());
+    window.AGENTS_FILTERED = AGENTS.filter(a => permitidos.includes(a.id));
+  } else {
+    window.AGENTS_FILTERED = AGENTS; // sin filtro = todos (admin)
+  }
+
+  // Mostrar nombre del usuario si viene
+  if (nombre) {
+    const badge = document.querySelector('.header-badge');
+    if (badge) badge.textContent = decodeURIComponent(nombre);
+  }
+
   renderAgentList();
 }
 
 function loadLogo() { /* logo embebido */ }
 
 function renderAgentList() {
-  document.getElementById('agentList').innerHTML = AGENTS.map(a => `
+  const lista = window.AGENTS_FILTERED || AGENTS;
+  document.getElementById('agentList').innerHTML = lista.map(a => `
     <button class="agent-btn" id="btn-${a.id}" onclick="selectAgent('${a.id}')">
       <div class="agent-icon" style="background:${a.color}33;color:${a.color}">${a.icon}</div>
       <div class="agent-info">
