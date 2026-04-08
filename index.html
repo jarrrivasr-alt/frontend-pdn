@@ -712,6 +712,7 @@ body {
 const DIFY_BASE = 'https://dify.datalogo.lat/v1';
 
 const AGENTS = [
+  { id:'superchat',    name:'Super Chat PDN',           desc:'Todos los agentes en un solo chat', icon:'⚡', color:'#0A1628', apiKey:'app-3x69hbGqFNAiryAppLA8j2bt',  tags:'Todo' },
   { id:'orquestador',  name:'Orquestador',             desc:'Punto de entrada central',          icon:'🎯', color:'#003B6D', apiKey:'app-3x69hbGqFNAiryAppLA8j2bt',  tags:'#40' },
   { id:'ventas',       name:'Ventas y Comercial',       desc:'Cotizaciones, prospectos, precios', icon:'📈', color:'#004F8C', apiKey:'app-h8H4jSclXUQKQal90wTp0dbI',  tags:'#1–4' },
   { id:'atencion',     name:'Atención al Cliente',      desc:'Quejas, pedidos, NPS 24/7',         icon:'💬', color:'#22AAAA', apiKey:'app-bYSjnc7MVhD3PfcSgkuMyHHy', tags:'#5–7' },
@@ -727,7 +728,8 @@ const AGENTS = [
 ];
 
 const CHIPS = {
-  orquestador: ['¿Cómo va el negocio hoy?','¿Dónde veo mis facturas?','Necesito una cotización'],
+  superchat:   ['¿Cómo van las ventas vs presupuesto?', '¿Qué productos tienen margen bajo?', '¿Cuál es la cartera vencida?', '¿Qué equipos tienen mantenimiento vencido?'],
+  orquestador: ['¿Cómo va el negocio hoy?', '¿Dónde veo mis facturas?', 'Necesito una cotización'],
   ventas:      ['¿Qué prospectos están fríos?','Cotiza 500 piezas CON-001','¿Qué productos tienen margen bajo?'],
   atencion:    ['Tengo una queja de cliente','¿Precio del TUB-003?','¿Cuándo llega el pedido CL-012?'],
   inventario:  ['¿Qué productos están bajo mínimo?','¿Días de stock restantes?','Rutas de entrega esta semana'],
@@ -745,8 +747,24 @@ const CHIPS = {
 let currentAgent  = null;
 let currentConvId = null;
 const USER        = 'usuario-pdn';
-let conversations = {};   // agentId → [{id, title}]
 let sidebarOpen   = true;
+const MAX_CONVS   = 15;
+const STORAGE_KEY = 'pdn_conversations';
+
+// Cargar conversaciones desde localStorage
+function loadConversations() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  } catch { return {}; }
+}
+
+function saveConversations(convs) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(convs));
+  } catch {}
+}
+
+let conversations = loadConversations();
 
 // ── INIT ──
 function init() {
@@ -779,7 +797,25 @@ function loadLogo() { /* logo embebido */ }
 
 function renderAgentList() {
   const lista = window.AGENTS_FILTERED || AGENTS;
-  document.getElementById('agentList').innerHTML = lista.map(a => `
+  const superChat = lista.filter(a => a.id === 'superchat');
+  const resto     = lista.filter(a => a.id !== 'superchat');
+
+  let html = '';
+
+  if (superChat.length) {
+    html += superChat.map(a => `
+      <button class="agent-btn" id="btn-${a.id}" onclick="selectAgent('${a.id}')" style="border:1px solid rgba(51,204,204,0.3);margin-bottom:6px">
+        <div class="agent-icon" style="background:linear-gradient(135deg,#003B6D,#33CCCC);color:white">${a.icon}</div>
+        <div class="agent-info">
+          <div class="agent-name" style="color:rgba(255,255,255,0.95)">${a.name}</div>
+          <div class="agent-tag" style="color:rgba(51,204,204,0.8)">${a.tags}</div>
+        </div>
+      </button>
+    `).join('');
+    html += '<div class="sidebar-divider" style="margin:6px 0"></div>';
+  }
+
+  html += resto.map(a => `
     <button class="agent-btn" id="btn-${a.id}" onclick="selectAgent('${a.id}')">
       <div class="agent-icon" style="background:${a.color}33;color:${a.color}">${a.icon}</div>
       <div class="agent-info">
@@ -788,6 +824,8 @@ function renderAgentList() {
       </div>
     </button>
   `).join('');
+
+  document.getElementById('agentList').innerHTML = html;
 }
 
 function selectAgent(id) {
@@ -888,6 +926,7 @@ async function deleteConv(e, convId) {
   } catch {}
   conversations[currentAgent.id] = (conversations[currentAgent.id] || []).filter(c => c.id !== convId);
   if (currentConvId === convId) { currentConvId = null; showWelcome(); }
+  saveConversations(conversations);
   renderConvList();
 }
 
@@ -1007,7 +1046,14 @@ async function sendMessage() {
       currentConvId = newConvId;
       if (!conversations[currentAgent.id]) conversations[currentAgent.id] = [];
       const title = text.length > 40 ? text.slice(0, 40) + '…' : text;
+      // Evitar duplicados
+      conversations[currentAgent.id] = conversations[currentAgent.id].filter(c => c.id !== newConvId);
       conversations[currentAgent.id].unshift({ id: newConvId, title });
+      // Mantener máximo 15
+      if (conversations[currentAgent.id].length > MAX_CONVS) {
+        conversations[currentAgent.id] = conversations[currentAgent.id].slice(0, MAX_CONVS);
+      }
+      saveConversations(conversations);
       renderConvList();
     }
 
