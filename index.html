@@ -1136,6 +1136,8 @@ function esc(t) {
 }
 
 function formatMsg(text) {
+    // Convertir URLs en links clickeables
+    text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#00C9A7;word-break:break-all;">$1</a>');
   if (!text) return '';
   let t = text.trim();
 
