@@ -1136,23 +1136,23 @@ function esc(t) {
 }
 
 function formatMsg(text) {
-    // Renderizar markdown básico
-    text = text.replace(/^### (.+)$/gm, '<h3 style="color:#0F4C75;margin:12px 0 6px">$1</h3>');
-    text = text.replace(/^## (.+)$/gm, '<h2 style="color:#0F4C75;margin:14px 0 8px">$1</h2>');
-    text = text.replace(/^# (.+)$/gm, '<h1 style="color:#0F4C75;margin:16px 0 10px">$1</h1>');
-    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    text = text.replace(/^- (.+)$/gm, '<li style="margin:4px 0">$1</li>');
-    text = text.replace(/^(\d+)\. (.+)$/gm, '<li style="margin:4px 0"><strong>$1.</strong> $2</li>');
-    text = text.replace(/^---$/gm, '<hr style="border:1px solid #e0e0e0;margin:12px 0">');
-    text = text.replace(/
-/g, '<br>');
-    // Convertir URLs en links clickeables
-    text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:#00C9A7;word-break:break-all;">$1</a>');
   if (!text) return '';
   let t = text.trim();
 
-  // Markdown tables
+  // Headers
+  t = t.replace(/^### (.+)$/gm, '<h3 style="color:#0F4C75;margin:12px 0 6px">$1</h3>');
+  t = t.replace(/^## (.+)$/gm, '<h2 style="color:#0F4C75;margin:14px 0 8px">$1</h2>');
+  t = t.replace(/^# (.+)$/gm, '<h1 style="color:#0F4C75;margin:16px 0 10px">$1</h1>');
+
+  // Bold, italic, code
+  t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  t = t.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  // HR
+  t = t.replace(/^---$/gm, '<hr style="border:1px solid #e0e0e0;margin:12px 0">');
+
+  // Tables
   t = t.replace(/\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)+)/g, (_, hdr, rows) => {
     const ths = hdr.split('|').filter(s=>s.trim()).map(s=>`<th>${s.trim()}</th>`).join('');
     const trs = rows.trim().split('\n').map(row => {
@@ -1162,15 +1162,10 @@ function formatMsg(text) {
     return `<table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table>`;
   });
 
-  t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  t = t.replace(/\*(.+?)\*/g,     '<em>$1</em>');
-  t = t.replace(/`([^`]+)`/g,     '<code>$1</code>');
-
   // Lists
   const lines = t.split('\n');
-  const out   = [];
-  let inList   = false;
-
+  const out = [];
+  let inList = false;
   for (const line of lines) {
     const liMatch = line.match(/^[-•*]\s+(.+)/);
     if (liMatch) {
@@ -1183,9 +1178,12 @@ function formatMsg(text) {
   }
   if (inList) out.push('</ul>');
 
+  // URLs
+  t = out.join('\n');
+  t = t.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:#00C9A7;word-break:break-all;">$1</a>');
+
   // Paragraphs
-  return out.join('\n')
-    .split(/\n\n+/)
+  return t.split(/\n\n+/)
     .filter(p => p.trim())
     .map(p => p.startsWith('<') ? p : `<p>${p.replace(/\n/g,'<br>')}</p>`)
     .join('');
