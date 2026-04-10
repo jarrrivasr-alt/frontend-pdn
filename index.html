@@ -712,7 +712,7 @@ body {
 const DIFY_BASE = 'https://dify.datalogo.lat/v1';
 
 const AGENTS = [
-  { id:'superchat',    name:'Super Chat PDN',           desc:'Todos los agentes en un solo chat', icon:'⚡', color:'#0A1628', apiKey:'app-8B0M03RwVz56QBu9IVEYjyoZ',  tags:'Todo' },
+  { id:'superchat',    name:'Super Chat PDN',           desc:'Todos los agentes en un solo chat', icon:'⚡', color:'#0A1628', apiKey:'app-8B0M03RwVz56QBu9IVEYjyoZ',  tags:'Todo', type:'workflow' },
   { id:'orquestador',  name:'Orquestador',             desc:'Punto de entrada central',          icon:'🎯', color:'#003B6D', apiKey:'app-8B0M03RwVz56QBu9IVEYjyoZ',  tags:'#40' },
   { id:'ventas',       name:'Ventas y Comercial',       desc:'Cotizaciones, prospectos, precios', icon:'📈', color:'#004F8C', apiKey:'app-h8H4jSclXUQKQal90wTp0dbI',  tags:'#1–4' },
   { id:'atencion',     name:'Atención al Cliente',      desc:'Quejas, pedidos, NPS 24/7',         icon:'💬', color:'#22AAAA', apiKey:'app-bYSjnc7MVhD3PfcSgkuMyHHy', tags:'#5–7' },
@@ -967,7 +967,13 @@ async function sendMessage() {
   const typingEl = showTyping();
 
   try {
-    const payload = {
+    const isWorkflow = currentAgent.type === 'workflow';
+
+    const payload = isWorkflow ? {
+      inputs: { query: text },
+      response_mode: 'streaming',
+      user: USER
+    } : {
       inputs: {},
       query: text,
       response_mode: 'streaming',
@@ -975,7 +981,9 @@ async function sendMessage() {
       user: USER
     };
 
-    const res = await fetch(`${DIFY_BASE}/chat-messages`, {
+    const endpoint = isWorkflow ? `${DIFY_BASE}/workflows/run` : `${DIFY_BASE}/chat-messages`;
+
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${currentAgent.apiKey}`,
@@ -1014,6 +1022,11 @@ async function sendMessage() {
         if (!raw || raw === '[DONE]') continue;
         try {
           const data = JSON.parse(raw);
+          if (data.event === 'workflow_finished' && data.data?.outputs?.output) {
+            fullText = data.data.outputs.output;
+            bubble.innerHTML = formatMsg(fullText);
+            gotData = true;
+          }
           if (data.event === 'message' && data.answer) {
             fullText += data.answer;
             bubble.innerHTML = formatMsg(fullText);
