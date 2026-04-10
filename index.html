@@ -1136,8 +1136,19 @@ function esc(t) {
 }
 
 function formatMsg(text) {
+    // Renderizar markdown básico
+    text = text.replace(/^### (.+)$/gm, '<h3 style="color:#0F4C75;margin:12px 0 6px">$1</h3>');
+    text = text.replace(/^## (.+)$/gm, '<h2 style="color:#0F4C75;margin:14px 0 8px">$1</h2>');
+    text = text.replace(/^# (.+)$/gm, '<h1 style="color:#0F4C75;margin:16px 0 10px">$1</h1>');
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    text = text.replace(/^- (.+)$/gm, '<li style="margin:4px 0">$1</li>');
+    text = text.replace(/^(\d+)\. (.+)$/gm, '<li style="margin:4px 0"><strong>$1.</strong> $2</li>');
+    text = text.replace(/^---$/gm, '<hr style="border:1px solid #e0e0e0;margin:12px 0">');
+    text = text.replace(/
+/g, '<br>');
     // Convertir URLs en links clickeables
-    text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#00C9A7;word-break:break-all;">$1</a>');
+    text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:#00C9A7;word-break:break-all;">$1</a>');
   if (!text) return '';
   let t = text.trim();
 
