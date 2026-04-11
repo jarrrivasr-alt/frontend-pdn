@@ -712,24 +712,26 @@ body {
 const DIFY_BASE = 'https://dify.datalogo.lat/v1';
 
 const AGENTS = [
-  { id:'superchat',    name:'Super Chat PDN',           desc:'Todos los agentes en un solo chat', icon:'⚡', color:'#0A1628', apiKey:'app-8B0M03RwVz56QBu9IVEYjyoZ',  tags:'Todo', type:'workflow' },
-  { id:'orquestador',  name:'Orquestador',             desc:'Punto de entrada central',          icon:'🎯', color:'#003B6D', apiKey:'app-8B0M03RwVz56QBu9IVEYjyoZ',  tags:'#40' },
-  { id:'ventas',       name:'Ventas y Comercial',       desc:'Cotizaciones, prospectos, precios', icon:'📈', color:'#004F8C', apiKey:'app-h8H4jSclXUQKQal90wTp0dbI',  tags:'#1–4' },
-  { id:'atencion',     name:'Atención al Cliente',      desc:'Quejas, pedidos, NPS 24/7',         icon:'💬', color:'#22AAAA', apiKey:'app-bYSjnc7MVhD3PfcSgkuMyHHy', tags:'#5–7' },
-  { id:'inventario',   name:'Inventario y Logística',   desc:'Stock, rutas, alertas',             icon:'📦', color:'#005FAA', apiKey:'app-EneYlb8Fh9UwNPMj8zrd3Edo', tags:'#8–9' },
-  { id:'calidad',      name:'Calidad y Mantenimiento',  desc:'OEE, fallas, defectos',             icon:'🔧', color:'#003B6D', apiKey:'app-jn9GzKaOIoaiLEPHBggkldz9', tags:'#10–11' },
-  { id:'finanzas',     name:'Finanzas y Contabilidad',  desc:'Cobranza, CxP, reportes',           icon:'💰', color:'#004F8C', apiKey:'app-8dHu3CSNxrwL78Pf0qZh167q', tags:'#12–16' },
-  { id:'rh',           name:'Recursos Humanos',         desc:'Nómina, onboarding, vacaciones',    icon:'👥', color:'#22AAAA', apiKey:'app-mnaEFwlmh43NfkVuMRRe1wl4', tags:'#17–20' },
-  { id:'compras',      name:'Compras y Proveedores',    desc:'OC, evaluación, negociación',       icon:'🛒', color:'#005FAA', apiKey:'app-387fvbxZjTZkfjMTOnBA7CFT', tags:'#21–23' },
-  { id:'marketing',    name:'Marketing y Contenido',    desc:'Contenido B2B, reputación',         icon:'📣', color:'#003B6D', apiKey:'app-0jOdsw0kHwWXH9w8R89u3mvK', tags:'#24–26' },
-  { id:'documental',   name:'Gestión Documental',       desc:'Buscador, resúmenes, compliance',   icon:'📋', color:'#004F8C', apiKey:'app-aTRpJbN0Dmug9kJsTm5m2UuM', tags:'#27–30' },
-  { id:'produccion',   name:'Producción y Manufactura', desc:'Planeación, OEE, seguridad',        icon:'⚙️', color:'#22AAAA', apiKey:'app-2V2kYaeUctxTfKcm1J1j9xMt', tags:'#31–34' },
-  { id:'direccion',    name:'Dirección y Estrategia',   desc:'Dashboard, rentabilidad, what-if',  icon:'🎯', color:'#005FAA', apiKey:'app-qzQewiuEtaxiE4eQuTJDxaoj', tags:'#35–38' },
+  // ── NIVEL GERENCIAL / DIRECTIVO ──────────────────────────────────────────
+  { id:'superchat',    name:'Consultas Directas',        desc:'Respuestas rápidas multi-área',     icon:'⚡', color:'#0A1628', apiKey:'app-8B0M03RwVz56QBu9IVEYjyoZ',  tags:'Gerencial', type:'workflow' },
+  { id:'agente_ia',   name:'Análisis Complejo',          desc:'IA con acceso total a datos PDN',   icon:'🧠', color:'#1a0a2e', apiKey:'app-lg6HQu7gxDBVQQAe5QrNdD6Q',  tags:'Directivo',  type:'agent' },
+  // ── AGENTES ESPECIALIZADOS ───────────────────────────────────────────────
+  { id:'ventas',       name:'Ventas y Comercial',        desc:'Cotizaciones, prospectos, precios', icon:'📈', color:'#004F8C', apiKey:'app-h8H4jSclXUQKQal90wTp0dbI',  tags:'#1–4' },
+  { id:'atencion',     name:'Atención al Cliente',       desc:'Quejas, pedidos, NPS 24/7',         icon:'💬', color:'#22AAAA', apiKey:'app-bYSjnc7MVhD3PfcSgkuMyHHy', tags:'#5–7' },
+  { id:'inventario',   name:'Inventario y Logística',    desc:'Stock, rutas, alertas',             icon:'📦', color:'#005FAA', apiKey:'app-EneYlb8Fh9UwNPMj8zrd3Edo', tags:'#8–9' },
+  { id:'calidad',      name:'Calidad y Mantenimiento',   desc:'OEE, fallas, defectos',             icon:'🔧', color:'#003B6D', apiKey:'app-jn9GzKaOIoaiLEPHBggkldz9', tags:'#10–11' },
+  { id:'finanzas',     name:'Finanzas y Contabilidad',   desc:'Cobranza, CxP, reportes',           icon:'💰', color:'#004F8C', apiKey:'app-8dHu3CSNxrwL78Pf0qZh167q', tags:'#12–16' },
+  { id:'rh',           name:'Recursos Humanos',          desc:'Nómina, onboarding, vacaciones',    icon:'👥', color:'#22AAAA', apiKey:'app-mnaEFwlmh43NfkVuMRRe1wl4', tags:'#17–20' },
+  { id:'compras',      name:'Compras y Proveedores',     desc:'OC, evaluación, negociación',       icon:'🛒', color:'#005FAA', apiKey:'app-387fvbxZjTZkfjMTOnBA7CFT', tags:'#21–23' },
+  { id:'marketing',    name:'Marketing y Contenido',     desc:'Contenido B2B, reputación',         icon:'📣', color:'#003B6D', apiKey:'app-0jOdsw0kHwWXH9w8R89u3mvK', tags:'#24–26' },
+  { id:'documental',   name:'Gestión Documental',        desc:'Buscador, resúmenes, compliance',   icon:'📋', color:'#004F8C', apiKey:'app-aTRpJbN0Dmug9kJsTm5m2UuM', tags:'#27–30' },
+  { id:'produccion',   name:'Producción y Manufactura',  desc:'Planeación, OEE, seguridad',        icon:'⚙️', color:'#22AAAA', apiKey:'app-2V2kYaeUctxTfKcm1J1j9xMt', tags:'#31–34' },
+  { id:'direccion',    name:'Dirección y Estrategia',    desc:'Dashboard, rentabilidad, what-if',  icon:'🎯', color:'#005FAA', apiKey:'app-qzQewiuEtaxiE4eQuTJDxaoj', tags:'#35–38' },
 ];
 
 const CHIPS = {
   superchat:   ['¿Cómo van las ventas vs presupuesto?', '¿Qué productos tienen margen bajo?', '¿Cuál es la cartera vencida?', '¿Qué equipos tienen mantenimiento vencido?'],
-  orquestador: ['¿Cómo va el negocio hoy?', '¿Dónde veo mis facturas?', 'Necesito una cotización'],
+  agente_ia:   ['Calcula el margen por SKU de este año', 'Dame la rentabilidad por línea de producto', 'Cruza paros de producción con márgenes', 'Resumen ejecutivo completo del negocio'],
   ventas:      ['¿Qué prospectos están fríos?','Cotiza 500 piezas CON-001','¿Qué productos tienen margen bajo?'],
   atencion:    ['Tengo una queja de cliente','¿Precio del TUB-003?','¿Cuándo llega el pedido CL-012?'],
   inventario:  ['¿Qué productos están bajo mínimo?','¿Días de stock restantes?','Rutas de entrega esta semana'],
@@ -797,22 +799,24 @@ function loadLogo() { /* logo embebido */ }
 
 function renderAgentList() {
   const lista = window.AGENTS_FILTERED || AGENTS;
-  const superChat = lista.filter(a => a.id === 'superchat');
-  const resto     = lista.filter(a => a.id !== 'superchat');
+  const gerenciales = lista.filter(a => a.id === 'superchat' || a.id === 'agente_ia');
+  const resto       = lista.filter(a => a.id !== 'superchat' && a.id !== 'agente_ia');
 
   let html = '';
 
-  if (superChat.length) {
-    html += superChat.map(a => `
-      <button class="agent-btn" id="btn-${a.id}" onclick="selectAgent('${a.id}')" style="border:1px solid rgba(51,204,204,0.3);margin-bottom:6px">
-        <div class="agent-icon" style="background:linear-gradient(135deg,#003B6D,#33CCCC);color:white">${a.icon}</div>
+  if (gerenciales.length) {
+    html += `<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(51,204,204,0.5);padding:4px 8px 2px;font-weight:600">Gerencial / Directivo</div>`;
+    html += gerenciales.map(a => `
+      <button class="agent-btn" id="btn-${a.id}" onclick="selectAgent('${a.id}')" style="border:1px solid rgba(51,204,204,0.3);margin-bottom:4px">
+        <div class="agent-icon" style="background:linear-gradient(135deg,${a.id==='agente_ia'?'#2d0057,#7b2fff':'#003B6D,#33CCCC'});color:white">${a.icon}</div>
         <div class="agent-info">
           <div class="agent-name" style="color:rgba(255,255,255,0.95)">${a.name}</div>
           <div class="agent-tag" style="color:rgba(51,204,204,0.8)">${a.tags}</div>
         </div>
       </button>
     `).join('');
-    html += '<div class="sidebar-divider" style="margin:6px 0"></div>';
+    html += '<div class="sidebar-divider" style="margin:8px 0"></div>';
+    html += `<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.3);padding:4px 8px 2px;font-weight:600">Agentes Especializados</div>`;
   }
 
   html += resto.map(a => `
