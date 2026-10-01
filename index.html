@@ -709,25 +709,25 @@ body {
 </div>
 
 <script>
-const DIFY_BASE = 'https://dify.datalogo.lat/v1';
+const PROXY_BASE = 'https://api.datalogo.lat/pdn-dify';
 
 const AGENTS = [
   // ── NIVEL GERENCIAL / DIRECTIVO ──────────────────────────────────────────
-  { id:'superchat',    name:'Consultas Directas',        desc:'Respuestas rápidas multi-área',     icon:'⚡', color:'#0A1628', apiKey:'app-UAYfuyGvvWBV8hF9ygdIW409', tags:'Gerencial' },
-  { id:'agente_ia',   name:'Análisis Complejo',          desc:'IA con acceso total a datos PDN',   icon:'🧠', color:'#1a0a2e', apiKey:'app-lg6HQu7gxDBVQQAe5QrNdD6Q',  tags:'Directivo',  type:'agent' },
+  { id:'superchat',    name:'Consultas Directas',        desc:'Respuestas rápidas multi-área',     icon:'⚡', color:'#0A1628', tags:'Gerencial' },
+  { id:'agente_ia',   name:'Análisis Complejo',          desc:'IA con acceso total a datos PDN',   icon:'🧠', color:'#1a0a2e', tags:'Directivo',  type:'agent' },
   // ── AGENTES ESPECIALIZADOS ───────────────────────────────────────────────
-  { id:'ventas',       name:'Ventas y Comercial',        desc:'Cotizaciones, prospectos, precios', icon:'📈', color:'#004F8C', apiKey:'app-h8H4jSclXUQKQal90wTp0dbI',  tags:'#1–4' },
-  { id:'atencion',     name:'Atención al Cliente',       desc:'Quejas, pedidos, NPS 24/7',         icon:'💬', color:'#22AAAA', apiKey:'app-bYSjnc7MVhD3PfcSgkuMyHHy', tags:'#5–7' },
-  { id:'inventario',   name:'Inventario y Logística',    desc:'Stock, rutas, alertas',             icon:'📦', color:'#005FAA', apiKey:'app-EneYlb8Fh9UwNPMj8zrd3Edo', tags:'#8–9' },
-  { id:'calidad',      name:'Calidad y Mantenimiento',   desc:'OEE, fallas, defectos',             icon:'🔧', color:'#003B6D', apiKey:'app-jn9GzKaOIoaiLEPHBggkldz9', tags:'#10–11' },
-  { id:'finanzas',     name:'Finanzas y Contabilidad',   desc:'Cobranza, CxP, reportes',           icon:'💰', color:'#004F8C', apiKey:'app-8dHu3CSNxrwL78Pf0qZh167q', tags:'#12–16' },
-  { id:'rh',           name:'Recursos Humanos',          desc:'Nómina, onboarding, vacaciones',    icon:'👥', color:'#22AAAA', apiKey:'app-mnaEFwlmh43NfkVuMRRe1wl4', tags:'#17–20' },
-  { id:'compras',      name:'Compras y Proveedores',     desc:'OC, evaluación, negociación',       icon:'🛒', color:'#005FAA', apiKey:'app-387fvbxZjTZkfjMTOnBA7CFT', tags:'#21–23' },
-  { id:'marketing',    name:'Marketing y Contenido',     desc:'Contenido B2B, reputación',         icon:'📣', color:'#003B6D', apiKey:'app-0jOdsw0kHwWXH9w8R89u3mvK', tags:'#24–26' },
-  { id:'documental',   name:'Gestión Documental',        desc:'Buscador, resúmenes, compliance',   icon:'📋', color:'#004F8C', apiKey:'app-aTRpJbN0Dmug9kJsTm5m2UuM', tags:'#27–30' },
-  { id:'produccion',   name:'Producción y Manufactura',  desc:'Planeación, OEE, seguridad',        icon:'⚙️', color:'#22AAAA', apiKey:'app-2V2kYaeUctxTfKcm1J1j9xMt', tags:'#31–34' },
-  { id:'planeacion',   name:'Planeador de Producción',    desc:'Plan semanal por urgencia de inventario', icon:'📅', color:'#0F4C75', apiKey:'app-ebsq9WZ8M3cOdV9wIzkpZoBN', tags:'Producción', type:'agent' },
-  { id:'direccion',    name:'Dirección y Estrategia',    desc:'Dashboard, rentabilidad, what-if',  icon:'🎯', color:'#005FAA', apiKey:'app-qzQewiuEtaxiE4eQuTJDxaoj', tags:'#35–38' },
+  { id:'ventas',       name:'Ventas y Comercial',        desc:'Cotizaciones, prospectos, precios', icon:'📈', color:'#004F8C', tags:'#1–4' },
+  { id:'atencion',     name:'Atención al Cliente',       desc:'Quejas, pedidos, NPS 24/7',         icon:'💬', color:'#22AAAA', tags:'#5–7' },
+  { id:'inventario',   name:'Inventario y Logística',    desc:'Stock, rutas, alertas',             icon:'📦', color:'#005FAA', tags:'#8–9' },
+  { id:'calidad',      name:'Calidad y Mantenimiento',   desc:'OEE, fallas, defectos',             icon:'🔧', color:'#003B6D', tags:'#10–11' },
+  { id:'finanzas',     name:'Finanzas y Contabilidad',   desc:'Cobranza, CxP, reportes',           icon:'💰', color:'#004F8C', tags:'#12–16' },
+  { id:'rh',           name:'Recursos Humanos',          desc:'Nómina, onboarding, vacaciones',    icon:'👥', color:'#22AAAA', tags:'#17–20' },
+  { id:'compras',      name:'Compras y Proveedores',     desc:'OC, evaluación, negociación',       icon:'🛒', color:'#005FAA', tags:'#21–23' },
+  { id:'marketing',    name:'Marketing y Contenido',     desc:'Contenido B2B, reputación',         icon:'📣', color:'#003B6D', tags:'#24–26' },
+  { id:'documental',   name:'Gestión Documental',        desc:'Buscador, resúmenes, compliance',   icon:'📋', color:'#004F8C', tags:'#27–30' },
+  { id:'produccion',   name:'Producción y Manufactura',  desc:'Planeación, OEE, seguridad',        icon:'⚙️', color:'#22AAAA', tags:'#31–34' },
+  { id:'planeacion',   name:'Planeador de Producción',    desc:'Plan semanal por urgencia de inventario', icon:'📅', color:'#0F4C75', tags:'Producción', type:'agent' },
+  { id:'direccion',    name:'Dirección y Estrategia',    desc:'Dashboard, rentabilidad, what-if',  icon:'🎯', color:'#005FAA', tags:'#35–38' },
 ];
 
 const CHIPS = {
@@ -748,6 +748,7 @@ const CHIPS = {
 };
 
 // Estado
+let sending = false;
 let currentAgent  = null;
 let currentConvId = null;
 const USER        = 'usuario-pdn';
@@ -835,6 +836,7 @@ function renderAgentList() {
 }
 
 function selectAgent(id) {
+  if (sending) return;
   currentAgent  = AGENTS.find(a => a.id === id);
   currentConvId = null;
 
@@ -889,54 +891,76 @@ function renderConvList() {
   list.innerHTML = convs.map(c => `
     <div class="conv-item ${c.id === currentConvId ? 'active' : ''}" onclick="loadConv('${c.id}')">
       <div class="conv-dot"></div>
-      <span class="conv-text">${c.title}</span>
+      <span class="conv-text">${esc(c.title)}</span>
       <button class="conv-del" onclick="deleteConv(event,'${c.id}')">×</button>
     </div>
   `).join('');
 }
 
+// Se conserva el usuario histórico para recuperar las conversaciones existentes.
+// No representa una sesión autenticada ni permisos por persona.
+async function proxyRequest(path, options = {}, agent = currentAgent) {
+  const url = new URL(PROXY_BASE + path);
+  const config = { ...options, headers: { ...options.headers } };
+  if (!config.method || config.method === 'GET') {
+    url.searchParams.set('agent_id', agent.id);
+  } else {
+    config.headers['Content-Type'] = 'application/json';
+    config.body = JSON.stringify({ ...JSON.parse(config.body || '{}'), agent_id: agent.id });
+  }
+  const response = await fetch(url.toString(), config);
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.message || `HTTP ${response.status}`);
+  }
+  return response;
+}
+
 async function loadConv(convId) {
-  if (!currentAgent) return;
+  if (!currentAgent || sending) return;
+  const agent = currentAgent;
   currentConvId = convId;
   renderConvList();
-
   const msgs = document.getElementById('messages');
   msgs.innerHTML = '<div style="text-align:center;padding:24px;color:#99AABB;font-size:13px">Cargando historial…</div>';
-
   try {
-    const res  = await fetch(`${DIFY_BASE}/messages?conversation_id=${convId}&user=${USER}&limit=50`, {
-      headers: { 'Authorization': `Bearer ${currentAgent.apiKey}` }
-    });
+    const params = new URLSearchParams({ conversation_id: convId, user: USER, limit: '50' });
+    const res = await proxyRequest('/messages?' + params, {}, agent);
     const data = await res.json();
+    if (currentAgent !== agent || currentConvId !== convId) return;
     msgs.innerHTML = '';
     (data.data || []).reverse().forEach(m => {
-      appendMsg('user',      m.query);
+      appendMsg('user', m.query);
       appendMsg('assistant', m.answer);
     });
     scrollToBottom();
-  } catch {
+  } catch (err) {
+    if (currentAgent !== agent || currentConvId !== convId) return;
     msgs.innerHTML = '';
-    appendMsg('assistant', 'No se pudo cargar el historial de esta conversación.');
+    appendMsg('assistant', 'No se pudo cargar el historial: ' + err.message);
   }
 }
 
 async function deleteConv(e, convId) {
   e.stopPropagation();
-  if (!confirm('¿Eliminar esta conversación?')) return;
+  if (sending || !currentAgent || !confirm('¿Eliminar esta conversación?')) return;
+  const agent = currentAgent;
   try {
-    await fetch(`${DIFY_BASE}/conversations/${convId}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${currentAgent.apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user: USER })
-    });
-  } catch {}
-  conversations[currentAgent.id] = (conversations[currentAgent.id] || []).filter(c => c.id !== convId);
-  if (currentConvId === convId) { currentConvId = null; showWelcome(); }
+    await proxyRequest('/conversations/' + encodeURIComponent(convId), {
+      method: 'DELETE', body: JSON.stringify({ user: USER })
+    }, agent);
+  } catch (err) {
+    alert('No se eliminó la conversación: ' + err.message);
+    return;
+  }
+  conversations[agent.id] = (conversations[agent.id] || []).filter(c => c.id !== convId);
+  if (currentAgent === agent && currentConvId === convId) { currentConvId = null; showWelcome(); }
   saveConversations(conversations);
   renderConvList();
 }
 
 function newChat() {
+  if (sending) return;
   currentConvId = null;
   if (currentAgent) showWelcome();
 }
@@ -957,11 +981,13 @@ function sendChip(text) {
 }
 
 async function sendMessage() {
+  if (sending) return;
   const input = document.getElementById('msgInput');
   const text  = input.value.trim();
   if (!text) return;
   if (!currentAgent) { alert('Selecciona un agente primero.'); return; }
 
+  sending = true;
   input.value = '';
   input.style.height = 'auto';
   document.getElementById('sendBtn').disabled = true;
@@ -987,75 +1013,41 @@ async function sendMessage() {
       user: USER
     };
 
-    const endpoint = isWorkflow ? `${DIFY_BASE}/workflows/run` : `${DIFY_BASE}/chat-messages`;
-
-    const res = await fetch(endpoint, {
+    const endpoint = isWorkflow ? '/workflows/run' : '/chat-messages';
+    const res = await proxyRequest(endpoint, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${currentAgent.apiKey}`,
-        'Content-Type': 'application/json',
-        'Accept': 'text/event-stream'
-      },
+      headers: { 'Accept': 'text/event-stream' },
       body: JSON.stringify(payload)
     });
-
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.message || `HTTP ${res.status}`);
-    }
 
     typingEl.remove();
     const assistantEl = appendMsg('assistant', '');
     const bubble      = assistantEl.querySelector('.msg-bubble');
 
-    const reader  = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer   = '';
-    let fullText  = '';
+    let fullText = '';
     let newConvId = null;
-    let gotData   = false;
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop();
-
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const raw = line.slice(6).trim();
-        if (!raw || raw === '[DONE]') continue;
-        try {
-          const data = JSON.parse(raw);
-          if (data.event === 'workflow_finished' && data.data?.outputs?.output) {
-            fullText = data.data.outputs.output;
-            bubble.innerHTML = formatMsg(fullText);
-            gotData = true;
-          }
-          if (data.event === 'message' && data.answer) {
-            fullText += data.answer;
-            bubble.innerHTML = formatMsg(fullText);
-            gotData = true;
-            scrollToBottom();
-          }
-          if (data.event === 'agent_message' && data.answer) {
-            fullText += data.answer;
-            bubble.innerHTML = formatMsg(fullText);
-            gotData = true;
-            scrollToBottom();
-          }
-          if (data.event === 'message_end' || data.event === 'agent_thought') {
-            if (data.conversation_id) newConvId = data.conversation_id;
-          }
-          if (data.event === 'error') {
-            throw new Error(data.message || 'Error en el agente');
-          }
-        } catch (parseErr) {
-          // línea incompleta, continuar
+    let gotData = false;
+    await consumeSSE(res, data => {
+      if (data.event === 'error') throw new Error(data.message || 'Error en el agente');
+      if (data.conversation_id) newConvId = data.conversation_id;
+      if (data.event === 'workflow_finished') {
+        if (data.data?.status === 'failed') throw new Error('El flujo no pudo completarse');
+        if (data.data?.outputs?.output) {
+          fullText = data.data.outputs.output;
+          gotData = true;
         }
       }
-    }
+      if ((data.event === 'message' || data.event === 'agent_message') && data.answer) {
+        fullText += data.answer;
+        gotData = true;
+      }
+      if (data.event === 'message_replace' && data.answer) {
+        fullText = data.answer;
+        gotData = true;
+      }
+      bubble.innerHTML = formatMsg(fullText);
+      scrollToBottom();
+    });
 
     if (!gotData && !fullText) {
       bubble.innerHTML = formatMsg('El agente no devolvió respuesta. Intenta de nuevo.');
@@ -1078,9 +1070,10 @@ async function sendMessage() {
 
   } catch (err) {
     typingEl?.remove();
-    appendMsg('assistant', `⚠️ Error al conectar con el agente:\n\n${err.message}\n\nVerifica que Dify esté activo en dify.datalogo.lat`);
+    appendMsg('assistant', `⚠️ Error al conectar con el agente:\n\n${err.message}\n\nVerifica la disponibilidad del servicio con el administrador`);
   }
 
+  sending = false;
   document.getElementById('sendBtn').disabled = false;
   document.getElementById('msgInput').focus();
 }
@@ -1138,12 +1131,12 @@ function logout() {
 
 // ── FORMAT ──
 function esc(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 function formatMsg(text) {
   if (!text) return '';
-  let t = text.trim();
+  let t = esc(String(text).trim());
 
   // Headers
   t = t.replace(/^### (.+)$/gm, '<h3 style="color:#0F4C75;margin:12px 0 6px">$1</h3>');
@@ -1186,13 +1179,52 @@ function formatMsg(text) {
 
   // URLs
   t = out.join('\n');
-  t = t.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:#00C9A7;word-break:break-all;">$1</a>');
+  t = t.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#00C9A7;word-break:break-all;">$1</a>');
 
   // Paragraphs
   return t.split(/\n\n+/)
     .filter(p => p.trim())
     .map(p => p.startsWith('<') ? p : `<p>${p.replace(/\n/g,'<br>')}</p>`)
     .join('');
+}
+
+// Parser SSE: UTF-8 fragmentado, CRLF, varios data: y errores visibles.
+async function consumeSSE(response, onEvent) {
+  if (!response.body || !response.headers.get('content-type')?.includes('text/event-stream')) {
+    throw new Error('Respuesta inesperada del servicio');
+  }
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let pending = '';
+  function dispatch(frame) {
+    const raw = frame.split('\n').filter(line => line.startsWith('data:'))
+      .map(line => line.slice(5).replace(/^ /, '')).join('\n').trim();
+    if (!raw || raw === '[DONE]') return;
+    let event;
+    try { event = JSON.parse(raw); }
+    catch { throw new Error('Respuesta incompleta del servicio'); }
+    onEvent(event);
+  }
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      pending += done ? decoder.decode() : decoder.decode(value, { stream: true });
+      pending = pending.replace(/\r\n/g, '\n');
+      let boundary;
+      while ((boundary = pending.indexOf('\n\n')) >= 0) {
+        dispatch(pending.slice(0, boundary));
+        pending = pending.slice(boundary + 2);
+      }
+      if (pending.length > 2097152) throw new Error('Respuesta demasiado grande');
+      if (done) {
+        if (pending.trim()) dispatch(pending);
+        break;
+      }
+    }
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
 }
 
 // ── START ──
